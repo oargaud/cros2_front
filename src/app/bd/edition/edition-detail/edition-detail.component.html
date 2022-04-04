@@ -1,0 +1,24 @@
+
+<app-bd-header></app-bd-header>
+
+<div class="row my-5">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+  
+      <form [formGroup]="editionForm">
+  
+        <div class="input-group m-2">
+            <span class="input-group-text col-4">Name</span>
+            <input class="form-control col-8" type="text" formControlName="name">
+        </div>  
+  
+        
+        <div class="float-end my-5">
+          <button class="btn btn-outline-success " (click)="createEdition()">Valider</button>
+        </div>
+  
+      </form>
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+  

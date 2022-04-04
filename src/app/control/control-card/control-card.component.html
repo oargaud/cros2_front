@@ -1,0 +1,15 @@
+
+<div class="card h-100" (click)="toggleState()">
+
+    <div class="card-header" >
+        <h6>{{control.name}}</h6>
+    </div>
+    <div class="card-body">
+        Description : {{control.description}}
+        <!-- <img *ngIf="bd.photo" [src]="'data:image/jpeg;base64,' + bd.photo.photo" class="couv" routerLink="/bdform/{{bd.id}}">
+        <img *ngIf="!bd.photo" src = "assets/not_found_2.png" class="couv" routerLink="/bdform/{{bd.id}}"> -->
+    </div>
+    <div class="card-footer" [style.background-color]=couleur>
+        <div>Etat : {{control.state}}</div> 
+    </div>
+</div>

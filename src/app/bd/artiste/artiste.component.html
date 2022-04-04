@@ -1,0 +1,96 @@
+
+<app-bd-header></app-bd-header>
+
+<div *ngIf="userService.roleMatch(['BdAdmin'])" class="d-flex justify-content-center my-2">
+    <button class="btn btn-outline-success m-2" routerLink="/artistedetail/0" >Nouvel Artiste</button>
+</div>
+
+
+
+
+<div class="container">
+    <table class="table table-bordered">
+      <thead>
+
+        <tr>
+            <th>
+                <label for="inputArtiste">Filtre Nom</label>
+                <input class="form-control" type="text" id="inputArtiste" [(ngModel)]="filtreLastName" (change)="getArtistes()">
+            </th>
+            <th>
+                <label for="inputArtiste">Filtre Prénom</label>
+                <input class="form-control" type="text" id="inputArtiste" [(ngModel)]="filtreFirstName" (change)="getArtistes()">
+            </th>
+            <th>
+                <label for="inputArtiste">Filtre Pseudo</label>
+                <input class="form-control" type="text" id="inputArtiste" [(ngModel)]="filtreNickName" (change)="getArtistes()">
+            </th>
+        </tr>
+
+        <tr>
+          <th (click)="toggleTrie('lastname')">Nom
+              <div *ngIf="sortProperty === 'lastname'">
+                  <div *ngIf="sortDirection ==='ASC'" class="bi bi-arrow-down-circle-fill">
+                  </div>
+                  <div *ngIf="sortDirection ==='DESC'" class="bi bi-arrow-up-circle-fill">
+                  </div>
+              </div>
+          </th>
+          <th (click)="toggleTrie('firstname')">Prénom
+              <div *ngIf="sortProperty === 'firstname'">
+                  <div *ngIf="sortDirection ==='ASC'" class="bi bi-arrow-down-circle-fill">
+                  </div>
+                  <div *ngIf="sortDirection ==='DESC'" class="bi bi-arrow-up-circle-fill">
+                  </div>
+              </div>
+          </th>
+          <th (click)="toggleTrie('nickname')">Pseudo
+            <div *ngIf="sortProperty === 'nickname'">
+                <div *ngIf="sortDirection ==='ASC'" class="bi bi-arrow-down-circle-fill">
+                </div>
+                <div *ngIf="sortDirection ==='DESC'" class="bi bi-arrow-up-circle-fill">
+                </div>
+            </div>
+        </th>
+        </tr> 
+      </thead>
+      <tbody>
+        <tr *ngFor="let artiste of artistes">
+          <td routerLink="/artistedetail/{{artiste.id}}">{{artiste.lastname}}</td>
+          <td routerLink="/artistedetail/{{artiste.id}}">{{artiste.firstname}}</td>
+          <td routerLink="/artistedetail/{{artiste.id}}">{{artiste.nickname}}</td>
+          <!-- <td><button class="btn btn-danger" (click)="delArtiste(artiste.id)">Supprimer</button></td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" (click)="previousPage()">Previous</a></li>
+  
+    <li class="page-item"><a class="page-link" (click)="getPages(0)">1</a></li>
+    <li class="page-item"><a class="page-link" *ngIf="page>2" >...</a></li>
+  
+    <li class="page-item"><a class="page-link" (click)="getPages(page-1)" *ngIf="page>1" >{{page}}</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(page)" *ngIf="page>0 && page<totalPages-1">{{page+1}}</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(page+1)" *ngIf="page<totalPages-2" >{{page+2}}</a></li>
+  
+    <li class="page-item"><a class="page-link" *ngIf="page<totalPages-3" >...</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(totalPages-1)" *ngIf="totalPages>1">{{totalPages}}</a></li>
+  
+    <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
+  </ul>
+  
+  <div class="d-flex justify-content-center m-2">
+      <div class="col-2">
+          <label for="selectSize">Nombre d'artistes a afficher par pages</label>
+          <select class="form-select" id="selectSize" [(ngModel)]="size" (change)="getArtistes()">
+              <option *ngFor="let size of sizes">{{size}}</option>
+          </select>
+      </div>
+  </div>
+  
+  <div>page : {{page+1}}/{{totalPages}}</div>
+  <div>nombre de resultats : {{totalElements}}</div>
+  

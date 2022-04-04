@@ -1,0 +1,56 @@
+
+<div class="container mt-5">
+       <div class="card" style="padding: 20px;">
+              <form [formGroup]="loginForm"> 
+
+                     <div class="input-group mb-3">
+                            <span class="input-group-text col-2" >Username</span>
+                            <input type="text" class="form-control" formControlName="username" required>
+                     </div>
+
+                     <div class="input-group mb-3">
+                            <span class="input-group-text col-2" >Nom</span>
+                            <input type="text" class="form-control" formControlName="lastname" required>
+                     </div>
+                     
+                     <div class="input-group mb-3">
+                            <span class="input-group-text col-2" >Prénom</span>
+                            <input type="text" class="form-control" formControlName="firstname" required>
+                     </div>
+                     
+                     <div class="input-group mb-3">
+                            <span class="input-group-text col-2" >Email</span>
+                            <input type="text" class="form-control" formControlName="email" required>
+                     </div>
+
+                     <div class="input-group mb-3">
+                            <span class="input-group-text col-2" >Password</span>
+                            <input type="password" class="form-control" formControlName="password" required>
+                     </div>
+                     
+                     <div class="input-group mb-3">
+                            <span class="input-group-text col-2" >Confirmation Password</span>
+                            <input type="password" class="form-control" formControlName="password2" required>
+                     </div>
+
+                     
+              </form>
+
+       </div>
+</div>
+
+<!-- <div>{{loginForm.value|json}}</div>
+
+<div>{{loginForm.status}}</div> -->
+
+<div class="d-flex justify-content-center my-2">
+       <button class="btn btn-outline-success" (click)="createUtilisateur()">Valider</button>
+</div>
+
+<!-- <div class="d-flex justify-content-center my-2">
+       <button class="btn btn-outline-success" (click)="resetForm()">Reset</button>
+</div> -->
+
+<!-- <div class="d-flex justify-content-center my-2">
+       <button class="btn btn-outline-success" (click)="testForm()">Test</button>
+</div> -->

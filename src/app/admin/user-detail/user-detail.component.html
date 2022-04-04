@@ -1,0 +1,57 @@
+
+<div></div>
+
+<div *ngIf="user" class="container mt-5">
+  <div class="card " style="color: green; padding: 20px;">
+    <h1 class="text-center mb-2">{{user.username}}</h1>
+    <div>Nom : {{user.lastname}}</div>
+    <div>Prénom : {{user.firstname}}</div>
+
+    <div>
+        Email validé :
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="validated"  [(ngModel)]="user.isvalidated"
+                [ngModelOptions]="{standalone: true}" (change)="saveUser()">
+            <label class="form-check-label" for="validated">{{user.isvalidated?"ON":"OFF"}}</label>
+        </div>
+    </div>
+    <div>
+        Compte verouillé :
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="locked"  [(ngModel)]="user.islocked"
+                [ngModelOptions]="{standalone: true}" (change)="saveUser()">
+            <label class="form-check-label" for="locked">{{user.islocked?"ON":"OFF"}}</label>
+        </div>
+    </div>
+
+    <div class="">Roles :
+        <div  style="color: rgb(0, 189, 202); padding: 20px;">
+            <table>
+                <tr  *ngFor="let userRole of user.roles" >
+                    <td>{{userRole.roleName}}</td>
+                    <td><button class="btn btn-outline-danger" (click)="removeRoleToUser(userRole)">Supprimer</button></td>
+             
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+ 
+    <div *ngIf="roles.length>0" class="d-flex justify-content-center my-5">
+        <div class="row">
+            <select class="form-select" [(ngModel)]="selectedRole" >
+              <option *ngFor="let role of roles" [value]="role.roleName">{{role.roleName}}</option>
+            </select>
+            <button class="btn btn-outline-primary" (click)="addRoleToUser()">Ajouter</button>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center my-5">
+        <button class="btn btn-outline-danger" (click)="delUser()">Supprimer utilisateur</button>
+    </div>
+    
+
+
+  </div>
+</div>

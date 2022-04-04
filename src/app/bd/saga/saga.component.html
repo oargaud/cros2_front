@@ -1,0 +1,78 @@
+
+<app-bd-header></app-bd-header>
+
+<div *ngIf="userService.roleMatch(['BdAdmin'])" class="d-flex justify-content-center my-2">
+    <button class="btn btn-outline-success m-2" routerLink="/sagadetail/0" >Nouvelle Saga</button>
+</div>
+
+
+
+
+
+
+<div class="container">
+    <table class="table table-bordered">
+      <thead>
+
+        <tr>
+          <th>
+              <label for="inputArtiste">Filtre nom de la Saga</label>
+              <input class="form-control" type="text" id="inputArtiste" [(ngModel)]="filtreNom" (change)="getSagas()">
+          </th>
+        </tr>
+
+        <tr>
+          <th (click)="toggleTrie('name')">Nom de la Saga
+              <div *ngIf="sortProperty === 'name'">
+                  <div *ngIf="sortDirection ==='ASC'">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                      </svg>
+                  </div>
+                  <div *ngIf="sortDirection ==='DESC'">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                      </svg>
+                  </div>
+              </div>
+          </th>
+        </tr> 
+      </thead>
+      <tbody>
+        <tr *ngFor="let saga of sagas">
+          <td routerLink="/vinyleform/{{saga.id}}">{{saga.name}}</td>
+          <td><button class="btn btn-danger" (click)="delSaga(saga.id)">Supprimer</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" (click)="previousPage()">Previous</a></li>
+  
+    <li class="page-item"><a class="page-link" (click)="getPages(0)">1</a></li>
+    <li class="page-item"><a class="page-link" *ngIf="page>2" >...</a></li>
+  
+    <li class="page-item"><a class="page-link" (click)="getPages(page-1)" *ngIf="page>1" >{{page}}</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(page)" *ngIf="page>0 && page<totalPages-1">{{page+1}}</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(page+1)" *ngIf="page<totalPages-2" >{{page+2}}</a></li>
+  
+    <li class="page-item"><a class="page-link" *ngIf="page<totalPages-3" >...</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(totalPages-1)" *ngIf="totalPages>1">{{totalPages}}</a></li>
+  
+    <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
+  </ul>
+  
+  <div class="d-flex justify-content-center m-2">
+      <div class="col-2">
+          <label for="selectSize">Nombre de vinyle a afficher par pages</label>
+          <select class="form-select" id="selectSize" [(ngModel)]="size" (change)="getSagas()">
+              <option *ngFor="let size of sizes">{{size}}</option>
+          </select>
+      </div>
+  </div>
+  
+  <div>page : {{page+1}}/{{totalPages}}</div>
+  <div>nombre de resultats : {{totalElements}}</div>
+  

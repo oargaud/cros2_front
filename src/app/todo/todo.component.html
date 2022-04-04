@@ -1,0 +1,45 @@
+<p>todo works!</p>
+<div *ngIf="userService.roleMatch(['TodoAdmin'])" class="d-flex justify-content-center my-2">
+    <button class="btn btn-outline-success m-2" routerLink="/tododetail/0">Nouvelle Tache</button>
+</div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <!-- <div class="d-flex justify-content-center my-2 "> -->
+            <table class=" w-100">
+                <tr class="row">
+                    <th class="col-4">Titre</th>
+                    <th class="col-2">Auteur</th>
+                    <th class="col-2">Création</th>
+                    <th class="col-2">Modification</th>
+                    <th class="col-1">Priority</th>
+                    <th class="col-1"></th>
+                </tr>
+                <tr *ngFor="let todo of todos" class="row">
+                    <td class="col-4" routerLink="/tododetail/{{todo.id}}">{{todo.titre}}</td>
+                    <td class="col-2" routerLink="/tododetail/{{todo.id}}">{{todo.auteur}}</td>
+                    <td class="col-2" routerLink="/tododetail/{{todo.id}}"
+                        data-bs-toggle="tooltip" title="{{todo.creation | date:'medium'}}">
+                        {{todo.creation | date:'longDate'}}
+                    </td>
+                    <td class="col-2" routerLink="/tododetail/{{todo.id}}" 
+                        data-bs-toggle="tooltip" title="{{ todo.modif | date:'medium'}}">
+                        {{todo.modif | date:'longDate'}}
+                    </td>
+                    <td class="col-1" routerLink="/tododetail/{{todo.id}}">{{todo.priority}}</td>
+                    <td class="col-1"><button class="btn btn-outline-danger" (click)="delTodo(todo)"></button></td>
+                </tr>
+            </table>
+        <!-- </div> -->
+    </div>
+    
+    <div class="col-md-1"></div>
+
+</div>
+
+
+<div class="d-flex justify-content-center">
+
+    <app-todo-card *ngFor="let todo of todos" [todo]="todo" ></app-todo-card>
+
+</div>

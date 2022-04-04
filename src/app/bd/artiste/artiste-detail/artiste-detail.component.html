@@ -1,0 +1,38 @@
+
+<app-bd-header></app-bd-header>
+
+<div class="row my-5">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+  
+      <form [formGroup]="artisteForm">
+  
+        <div class="input-group m-2">
+            <span class="input-group-text col-4">Nom</span>
+            <input class="form-control col-8" type="text" formControlName="lastname">
+        </div> 
+
+        <div class="input-group m-2">
+            <span class="input-group-text col-4">Prénom</span>
+            <input class="form-control col-8" type="text" formControlName="firstname">
+        </div> 
+  
+        <div class="input-group m-2">
+          <span class="input-group-text col-4">Pseudo</span>
+          <input class="form-control col-8" type="text" formControlName="nickname">
+        </div> 
+
+        <div class="float-end my-5">
+          <button  (click)="saveArtiste()" [disabled]="!artisteForm.valid"
+          [ngClass]="artisteForm.valid ? 'btn btn-outline-success': 'btn btn-outline-danger'">Valider</button>
+        </div>
+
+        <div *ngIf="artiste.id"  class="float-end my-5">
+          <button  (click)="delArtiste()" class="btn btn-outline-danger">Supprimer</button>
+        </div>
+  
+      </form>
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+  

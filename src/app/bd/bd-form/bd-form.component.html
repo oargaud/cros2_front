@@ -1,0 +1,156 @@
+<app-bd-header></app-bd-header>
+
+
+<div class="row my-5">
+
+  <div class="col-sm-3"></div>
+
+  <div class="card col-sm-6">
+    <div class="card-body">
+      <form [formGroup]="bdForm">
+        <div class="form-row ">
+
+
+          <div class="input-group mb-3 mt-3">
+            <label for="titre" class="input-group-text col-2">Titre</label>
+            <input type="text" class="form-control" id="titre" name="titre" formControlName="titre">
+          </div>
+
+
+          <div class="input-group mb-3 mt-3">
+            <label for="tome" class="input-group-text col-2">Tome</label>
+            <input type="text" class="form-control" id="tome" name="tome" formControlName="tome">
+          </div>
+
+          <div class="input-group mb-3 mt-3">
+            <label for="statut" class="input-group-text col-2">Statut</label>
+            <select class="form-select" name="statut" id="statut" formControlName="statut">
+              <option *ngFor="let statut of listeStatut" [ngValue]="statut">{{ statut }}</option>
+            </select>
+          </div>
+
+          <div class="input-group mb-3 mt-3">
+            <label for="saga" class="input-group-text col-2">Saga</label>
+            <select class="form-select" name="saga" id="saga" formControlName="saga">
+              <option value=""></option>
+              <option *ngFor="let saga of listSaga; let j = index" [ngValue]="listSaga[j]">{{ listSaga[j].name }}</option>
+            </select>
+          </div>
+
+
+          <div class="input-group mb-3 mt-3">
+            <label for="edition" class="input-group-text col-2">Edition</label>
+            <select class="form-select" name="edition" id="edition" formControlName="edition">
+              <option value=""></option>
+              <option *ngFor="let edition of listEdition; let k = index" [ngValue]="listEdition[k]">{{ listEdition[k].name }}</option>
+           <!-- <option *ngFor="let edition of listEdition" [ngValue]="edition">{{ edition.name }}</option> -->
+            </select>
+          </div>
+
+
+          <div formArrayName="scenaristes" class="card p-2 my-3">
+            <h6>Scénaristes</h6>
+            <div class="input-group mb-3 mt-3 " *ngFor="let scenariste of scenaristes.controls; let i=index">
+              <label for="scenariste-{{i}}" class="input-group-text col-2">Scénariste</label>
+              <select class="form-select" name="scenariste" id="scenariste-{{i}}" [formControlName]="i">
+                <!-- <option disabled selected value> -- choisissez un artiste -- </option> -->
+                <option selected value> -- choisissez un artiste -- </option>
+                <option *ngFor="let artiste of listArtist;let l = index" [ngValue]="listArtist[l]">{{listArtist[l].lastname}}  {{listArtist[l].firstname!=null?listArtist[l].firstname:""}}</option>
+              </select>
+              <button (click)="removeScenariste(i)" class="btn btn-outline-danger" type="button">Supprimer</button>
+            </div>
+            <div class="d-flex justify-content-around">
+              <button (click)="addScenariste()" type="button" class="btn btn-outline-info">Ajouter un
+                scénariste</button>
+            </div>
+          </div>
+
+
+          <div formArrayName="illustrateurs" class="card p-2 my-3">
+            <h6>Illustrateurs</h6>
+            <div class="input-group mb-3 mt-3 " *ngFor="let illustrateur of illustrateurs.controls; let i=index">
+              <label for="illustrateur-{{i}}" class="input-group-text col-2">Illustrateur</label>
+              <select class="form-select" name="illustrateur" id="illustrateur-{{i}}" [formControlName]="i">
+                <option selected value> -- choisissez un artiste -- </option>
+                <option *ngFor="let artiste of listArtist" [ngValue]="artiste">{{artiste.lastname}}  {{artiste.firstname!=null?artiste.firstname:""}}</option>
+              </select>
+              <button (click)="removeIllustrateur(i)" class="btn btn-outline-danger" type="button">Supprimer</button>
+            </div>
+            <div class="d-flex justify-content-around">
+              <button (click)="addIllustrateur()" type="button" class="btn btn-outline-info">Ajouter un
+                illustrateur</button>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+          <div>
+            <button *ngIf="!selectedFile" class="btn btn-outline-info" (click)="file.click()">Ajouter
+              couverture</button>
+            <div class="row">
+              <div class="col-4 mx-auto">
+                <img *ngIf="selectedFile" [src]="url" class="w-100">
+                <img *ngIf="bd.photo!=null" [src]="'data:image/jpeg;base64,' + bd.photo.photo" class="w-100">
+              </div>
+            </div>
+            <input hidden type="file" id="file" #file class="form-control" accept="image/png, image/jpeg"
+              requiredFileType="image" (change)="onFileChanged($event)">
+            <button *ngIf="selectedFile" (click)="supprimerFichier()" class="btn btn-outline-danger"
+              type="button">Supprimer</button>
+          </div>
+
+
+
+
+
+
+
+
+
+          <!-- <div class="input-group mb-3 mt-3">
+              <label for="statutPossession" class="input-group-text col-2">Statut</label>
+              <select class="form-select" name="statutPossession" id="statutPossession" formControlName="statutPossession">
+                <option *ngFor="let statut of listStatutPossession" [ngValue]="statut">{{ statut.statut }}</option>
+              </select>
+              <button type="button" class="btn btn-outline-info col-3" data-bs-toggle="modal" data-bs-target="#newStatutPossessionModal">Créer un statut</button>
+            </div> -->
+
+
+        </div>
+      </form>
+    </div>
+
+
+    <!-- <div>
+      <p>Form Status: {{ bdForm.status }}</p>
+      <p>Form Value: {{ bdForm.value|json }}</p>
+    </div> -->
+
+
+    <div class="modal-footer">
+      <button (click)="validForm()" [disabled]="!bdForm.valid"
+        [ngClass]="bdForm.valid ? 'btn btn-outline-success': 'btn btn-outline-danger'" data-bs-dismiss="modal">
+        Valider bd
+      </button>
+
+      <button (click)="delete()" *ngIf="bd.id" class="btn btn-outline-danger"> 
+        Supprimer bd
+      </button>
+    </div>
+
+
+
+  </div>
+
+  <div class="col-sm-3"></div>
+
+</div>

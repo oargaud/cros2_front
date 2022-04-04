@@ -1,0 +1,36 @@
+<p>todo-detail works!</p>
+
+
+<div class="row my-5">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+  
+      <form [formGroup]="todoForm">
+  
+        <div class="input-group my-2">
+            <span class="input-group-text col-3">Titre</span>
+            <input class="form-control col-8" type="text" formControlName="titre">
+        </div>  
+
+        <div class="input-group my-2">
+            <label for="priority" class="input-group-text col-3">Priority</label>
+            <select class="form-select" name="priority" id="priority" formControlName="priority">
+                <option *ngFor="let priority of priorities" [ngValue]="priority">{{ priority }}</option>
+            </select>
+        </div>
+  
+        <div class="input-group my-2">
+            <span class="input-group-text col-3">Description</span>
+            <!-- <input class="form-control col-8" type="text" formControlName="description"> -->
+            <textarea class="form-control col-8" cols="30" rows="10" formControlName="description"></textarea>
+        </div> 
+        
+        <div class="float-end my-5">
+          <button class="btn btn-outline-success " (click)="saveTodo()">Valider</button>
+        </div>
+  
+      </form>
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+  

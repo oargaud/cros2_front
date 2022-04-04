@@ -1,0 +1,233 @@
+<app-bd-header *ngIf="userService.roleMatch(['BdAdmin'])"></app-bd-header>
+
+
+<div *ngIf="userService.roleMatch(['BdAdmin'])" class="d-flex justify-content-center my-2">
+    <button class="btn btn-outline-success m-2" routerLink="/bdform/0">Nouvelle Bd</button>
+</div>
+
+
+
+<!-- <div class="d-flex justify-content-center m-2">
+    <div class="col-md-1 mx-2">
+        <label for="selectSize">Nombre de Bd par pages</label>
+        <select class="form-select" id="selectSize" [(ngModel)]="size" (change)="getBds()">
+            <option *ngFor="let size of sizes">{{size}}</option>
+        </select>
+    </div>
+    <div class="mx-2">
+        <div>page : {{page+1}}/{{totalPages}}</div>
+        <div>nombre de resultats : {{totalElements}}</div>
+    </div>
+</div> -->
+<div class="d-flex justify-content-center my-2">
+    <div class="mx-5">
+        <label for="selectSize">nombre d'elements par page</label>
+        <select class="form-select selectpicker" data-size="5" id="selectSize" [(ngModel)]="size" (change)="getBds()">
+            <option *ngFor="let size of sizes">{{size}}</option>
+        </select>
+    </div>
+    <div class="mx-5">
+        <div class="form-check form-switch">
+            <label class="form-check-label" for="mySwitch">{{vueTable?"Carte":"Liste"}}</label>
+            <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode" [(ngModel)]="vueTable"
+                [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+    <div>nombre de resultats : {{totalElements}}</div>
+</div>
+
+
+<ul class="pagination pagination-lg justify-content-center my-5">
+    <li class="bi bi-skip-backward-fill page-link" (click)="getPages(0)"></li>
+    <li class="bi bi-skip-start-fill page-link" (click)="getPages(page-5)"></li>
+
+    <li class="bi bi-caret-left-fill page-link" (click)="getPages(page-1)"></li>
+    <li class="page-item"><a class="page-link">{{page+1}}</a></li>
+    <li class="bi bi-caret-right-fill page-link" (click)="getPages(page+1)"></li>
+
+    <li class="bi bi-skip-end-fill page-link" (click)="getPages(page+5)"></li>
+    <li class="bi bi-skip-forward-fill page-link" (click)="getPages(totalPages-1)"></li>
+</ul>
+
+
+
+
+<!-- <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" (click)="previousPage()">Previous</a></li>
+
+    <li class="page-item"><a class="page-link" (click)="getPages(0)">1</a></li>
+    <li class="page-item"><a class="page-link" *ngIf="page>2">...</a></li>
+
+    <li class="page-item"><a class="page-link" (click)="getPages(page-1)" *ngIf="page>1">{{page}}</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(page)"
+            *ngIf="page>0 && page<totalPages-1">{{page+1}}</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(page+1)" *ngIf="page<totalPages-2">{{page+2}}</a></li>
+
+    <li class="page-item"><a class="page-link" *ngIf="page<totalPages-3">...</a></li>
+    <li class="page-item"><a class="page-link" (click)="getPages(totalPages-1)" *ngIf="totalPages>1">{{totalPages}}</a>
+    </li>
+
+    <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
+
+    <li><select class="form-select" id="selectSize" [(ngModel)]="size" (change)="getBds()">
+        <option *ngFor="let size of sizes">{{size}}</option>
+    </select></li>
+
+</ul> -->
+
+<div class="container">
+    <table class="table table-bordered">
+
+        <thead>
+            <tr class="row">
+                <th class="col-2">
+                    <label for="inputArtiste">Filtre Titre</label>
+                    <input class="form-control" type="text" id="inputArtiste" [(ngModel)]="filtreTitre"
+                        (change)="getBds()">
+                </th>
+                <!-- <th class="col-2">
+                    <label for="browser" class="form-label" id="saga" [(ngModel)]="filtreSaga" (change)="getBds()">Filtre Saga</label>
+                    <input class="form-control" list="browsers" name="browser" id="browser">
+                    <datalist id="browsers">
+                        <option value=""></option>
+                        <option *ngFor="let saga of listeSaga" [ngValue]="saga">{{ saga.name }}</option>
+                    </datalist> 
+                </th> -->
+
+                <th class="col-1">
+                    <label for="inputArtiste">Filtre Tome</label>
+                    <input class="form-control" type="text" id="inputArtiste" [(ngModel)]="filtreTome"
+                        (change)="getBds()">
+                </th>
+                <!-- <th class="col-2">
+                    <label for="browser" class="form-label" id="saga" [(ngModel)]="filtreSaga" (change)="getBds()">Filtre Saga</label>
+                    <input class="form-control" list="browsers" name="browser" id="browser">
+                    <datalist id="browsers">
+                        <option value=""></option>
+                        <option *ngFor="let saga of listeSaga" [ngValue]="saga">{{ saga.name }}</option>
+                    </datalist> 
+                </th> -->
+
+                <th class="col-1">
+                    <label for="statut">Filtre Statut</label>
+                    <select class="form-select selectpicker" data-size="5" id="statut" [(ngModel)]="filtreStatut" (change)="getBds()">
+                        <option value=""></option>
+                        <option *ngFor="let statut of listeStatut" [ngValue]="statut">{{ statut }}</option>
+                    </select>
+                </th>
+                <!-- <th class="col-2">
+                    <label for="browser" class="form-label" id="saga" [(ngModel)]="filtreSaga" (change)="getBds()">Filtre Saga</label>
+                    <input class="form-control" list="browsers" name="browser" id="browser">
+                    <datalist id="browsers">
+                        <option value=""></option>
+                        <option *ngFor="let saga of listeSaga" [ngValue]="saga">{{ saga.name }}</option>
+                    </datalist> 
+                </th> -->
+
+
+                <!-- <th class="col-2">
+                    <label for="saga">Filtre Saga</label>
+                    <select class="form-select selectpicker" data-size="5" data-live-search="true" id="saga" [(ngModel)]="filtreSaga" (change)="getBds()">
+                        <option value=""></option>
+                        <option *ngFor="let saga of listeSaga" [ngValue]="saga">{{ saga.name }}</option>
+                    </select>
+                </th> -->
+                <th class="col-2">
+                    <label for="saga" >Filtre Saga</label>
+                    <input class="form-control" list="sagas" name="saga" id="saga"  [(ngModel)]="filtreSaga" (change)="getBds()">
+                    <datalist id="sagas">
+                        <option value=""></option>
+                        <option *ngFor="let saga of listeSaga" [ngValue]="saga">{{ saga.name }}</option>
+                    </datalist> 
+                </th>
+
+
+                <th class="col-2">
+                    <label for="edition">Filtre Edition</label>
+                    <select class="form-select selectpicker" data-size="5" id="edition" [(ngModel)]="filtreEdition" (change)="getBds()">
+                        <option value=""></option>
+                        <option *ngFor="let edition of listeEdition" [ngValue]="edition">{{ edition.name }}</option>
+                    </select>
+                </th>
+
+
+                <!-- <th class="col-2">
+                    <label for="illustrateur">Filtre Illustrateur</label>
+                    <select class="form-select selectpicker" data-size="5" id="illustrateur" [(ngModel)]="filtreIllustrateur" (change)="getBds()">
+                        <option value=""></option>
+                        <option *ngFor="let illustrateur of listeIllustrateur" [ngValue]="illustrateur">{{ illustrateur.lastname }}</option>
+                    </select>
+                </th> -->
+                <th class="col-2">
+                    <label for="saga" >Filtre Illustrateur</label>
+                    <input class="form-control" list="illustrateurs" name="illustrateur" id="illustrateur" [(ngModel)]="filtreIllustrateur" (change)="getBds()">
+                    <datalist id="illustrateurs">
+                        <option value=""></option>
+                        <option *ngFor="let illustrateur of listeIllustrateur" [ngValue]="illustrateur">{{ illustrateur.lastname }}</option>
+                    </datalist> 
+                </th>
+
+
+                <!-- <th class="col-2">
+                    <label for="scenariste">Filtre Scénariste</label>
+                    <select class="form-select selectpicker" data-size="5" id="scenariste" [(ngModel)]="filtreScenariste" (change)="getBds()">
+                        <option value=""></option>
+                        <option *ngFor="let scenariste of listeScenariste" [ngValue]="scenariste">{{ scenariste.lastname }}</option>
+                    </select>
+                </th> -->
+                <th class="col-2">
+                    <label for="saga" >Filtre Scénariste</label>
+                    <input class="form-control" list="scenaristes" name="scenariste" id="scenariste" [(ngModel)]="filtreScenariste" (change)="getBds()">
+                    <datalist id="scenaristes">
+                        <option value=""></option>
+                        <option *ngFor="let scenariste of listeScenariste" [ngValue]="scenariste">{{ scenariste.lastname }}</option>
+                    </datalist> 
+                </th>
+            </tr>
+        </thead>
+
+
+        <tbody ng *ngIf="vueTable">
+            <tr *ngFor="let bd of bds" class="greyhover row">
+                <td routerLink="/bdform/{{bd.id}}" class="col-2">{{bd.titre}}</td>
+                <td routerLink="/bdform/{{bd.id}}" class="col-1">{{bd.tome}}</td>
+                <td routerLink="/bdform/{{bd.id}}" class="col-1">{{bd.statut}}</td>
+                <td routerLink="/bdform/{{bd.id}}" class="col-2">{{bd.saga!=null?bd.saga.name:""}}</td>
+                <td routerLink="/bdform/{{bd.id}}" class="col-2">{{bd.edition!=null?bd.edition.name:""}}</td>
+                <td routerLink="/bdform/{{bd.id}}" class="col-2"><span *ngFor="let artiste of bd.illustrateurs">{{artiste.lastname}} </span></td>
+                <td routerLink="/bdform/{{bd.id}}" class="col-2"><span *ngFor="let artiste of bd.scenaristes">{{artiste.lastname}} </span></td>
+                <!-- <td *ngIf="userService.roleMatch(['BdAdmin'])" class="col-1"><button class="btn btn-danger" (click)="delBd(bd.id)">Supprimer</button></td> -->
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+
+
+
+
+
+<div ng *ngIf="!vueTable" class="container mx-auto mt-4">
+    <div class="row gy-5">
+            <div *ngFor="let bd of bds"  class="col-md-2">
+                <app-bd-card [bd]="bd"></app-bd-card>
+            </div>
+    </div>
+</div>
+
+
+
+
+
+<ul class="pagination pagination-lg justify-content-center my-5">
+    <li class="bi bi-skip-backward-fill page-link" (click)="getPages(0)"></li>
+    <li class="bi bi-skip-start-fill page-link" (click)="getPages(page-5)"></li>
+
+    <li class="bi bi-caret-left-fill page-link" (click)="getPages(page-1)"></li>
+    <li class="page-item"><a class="page-link">{{page+1}}</a></li>
+    <li class="bi bi-caret-right-fill page-link" (click)="getPages(page+1)"></li>
+
+    <li class="bi bi-skip-end-fill page-link" (click)="getPages(page+5)"></li>
+    <li class="bi bi-skip-forward-fill page-link" (click)="getPages(totalPages-1)"></li>
+</ul>
+

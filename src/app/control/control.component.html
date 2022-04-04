@@ -1,0 +1,11 @@
+<p>control works!</p>
+
+
+
+<div class="container mx-auto mt-4">
+    <div class="row gy-5">
+            <div *ngFor="let control of controls"  class="col-md-2">
+                <app-control-card [control]="control"></app-control-card>
+            </div>
+    </div>
+</div>
