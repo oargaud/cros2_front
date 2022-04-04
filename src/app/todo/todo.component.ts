@@ -12,6 +12,8 @@ import { TodoService } from './todo.service';
 export class TodoComponent implements OnInit {
 
   todos: Todo[] = [];
+  
+  vueTable = false;
 
   constructor(
     public userService:UserService,
@@ -32,14 +34,6 @@ export class TodoComponent implements OnInit {
     )
   }
 
-  delTodo(todo){
-    this.todoService.delTodo(todo.id).subscribe(
-      (ok)=>{
-        // this.getTodos();
-        this._mqttService.unsafePublish("todo", JSON.stringify(todo), { qos: 1, retain: true });
-      }
-    )
-  }
 
   subscribe(){
     this._mqttService.observe("todo").subscribe(

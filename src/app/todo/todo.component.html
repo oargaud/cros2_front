@@ -1,8 +1,23 @@
-<p>todo works!</p>
+
+
 <div *ngIf="userService.roleMatch(['TodoAdmin'])" class="d-flex justify-content-center my-2">
     <button class="btn btn-outline-success m-2" routerLink="/tododetail/0">Nouvelle Tache</button>
 </div>
-<div class="row">
+
+
+<div class="d-flex justify-content-center">
+    <div class="form-check form-switch">
+        <label class="form-check-label" for="mySwitch">{{vueTable?"Carte":"Liste"}}</label>
+        <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode" [(ngModel)]="vueTable"
+            [ngModelOptions]="{standalone: true}">
+    </div>
+</div>
+
+
+
+
+
+<div *ngIf="vueTable" class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <!-- <div class="d-flex justify-content-center my-2 "> -->
@@ -27,7 +42,7 @@
                         {{todo.modif | date:'longDate'}}
                     </td>
                     <td class="col-1" routerLink="/tododetail/{{todo.id}}">{{todo.priority}}</td>
-                    <td class="col-1"><button class="btn btn-outline-danger" (click)="delTodo(todo)"></button></td>
+                    <!-- <td class="col-1"><button class="btn btn-outline-danger" (click)="delTodo(todo)"></button></td> -->
                 </tr>
             </table>
         <!-- </div> -->
@@ -38,8 +53,11 @@
 </div>
 
 
-<div class="d-flex justify-content-center">
 
-    <app-todo-card *ngFor="let todo of todos" [todo]="todo" ></app-todo-card>
+
+
+<div *ngIf="!vueTable" class="d-flex justify-content-center">
+
+    <app-todo-card *ngFor="let todo of todos" [todo]="todo" routerLink="/tododetail/{{todo.id}}"></app-todo-card>
 
 </div>

@@ -79,4 +79,15 @@ export class TodoDetailComponent implements OnInit {
     );
   }
 
+  delTodo(){
+    this.todoService.delTodo(this.todo.id).subscribe(
+      (ok)=>{
+        // this.getTodos();
+        this._mqttService.unsafePublish("todo", JSON.stringify(this.todo), { qos: 1, retain: true });
+        this.router.navigate(['/todo'])
+      }
+    )
+  }
+
+
 }
