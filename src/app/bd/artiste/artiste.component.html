@@ -6,6 +6,27 @@
 </div>
 
 
+<ul class="pagination pagination-lg justify-content-center my-2">
+    <li class="bi bi-skip-backward-fill page-link" (click)="getPages(0)"></li>
+    <li class="bi bi-skip-start-fill page-link" (click)="getPages(page-5)"></li>
+
+    <li class="bi bi-caret-left-fill page-link" (click)="getPages(page-1)"></li>
+    <li class="page-item"><a class="page-link">{{page+1}}/{{totalPages}}</a></li>
+    <li class="bi bi-caret-right-fill page-link" (click)="getPages(page+1)"></li>
+
+    <li class="bi bi-skip-end-fill page-link" (click)="getPages(page+5)"></li>
+    <li class="bi bi-skip-forward-fill page-link" (click)="getPages(totalPages-1)"></li>
+</ul>
+
+<div class="d-flex justify-content-center m-2 row">
+    <div class="col-1">
+        <label for="selectSize">artistes/pages</label>
+        <select class="form-select" id="selectSize" [(ngModel)]="size" (change)="getArtistes()">
+            <option *ngFor="let size of sizes">{{size}}</option>
+        </select>
+    </div>
+    <div class="col-1">nombre de resultats : {{totalElements}}</div>
+</div>
 
 
 <div class="container">
@@ -66,7 +87,7 @@
   </div>
   
   
-  <ul class="pagination justify-content-center">
+  <!-- <ul class="pagination justify-content-center">
     <li class="page-item"><a class="page-link" (click)="previousPage()">Previous</a></li>
   
     <li class="page-item"><a class="page-link" (click)="getPages(0)">1</a></li>
@@ -80,17 +101,26 @@
     <li class="page-item"><a class="page-link" (click)="getPages(totalPages-1)" *ngIf="totalPages>1">{{totalPages}}</a></li>
   
     <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
-  </ul>
+  </ul> -->
   
-  <div class="d-flex justify-content-center m-2">
-      <div class="col-2">
-          <label for="selectSize">Nombre d'artistes a afficher par pages</label>
-          <select class="form-select" id="selectSize" [(ngModel)]="size" (change)="getArtistes()">
-              <option *ngFor="let size of sizes">{{size}}</option>
-          </select>
-      </div>
-  </div>
-  
+
+  <ul class="pagination pagination-lg justify-content-center my-5">
+    <li class="bi bi-skip-backward-fill page-link" (click)="getPages(0)"></li>
+    <li class="bi bi-skip-start-fill page-link" (click)="getPages(page-5)"></li>
+
+    <li class="bi bi-caret-left-fill page-link" (click)="getPages(page-1)"></li>
+    <li class="page-item"><a class="page-link">{{page+1}}/{{totalPages}}</a></li>
+    <li class="bi bi-caret-right-fill page-link" (click)="getPages(page+1)"></li>
+
+    <li class="bi bi-skip-end-fill page-link" (click)="getPages(page+5)"></li>
+    <li class="bi bi-skip-forward-fill page-link" (click)="getPages(totalPages-1)"></li>
+</ul>
+
+
+
+
+
+<!--   
   <div>page : {{page+1}}/{{totalPages}}</div>
   <div>nombre de resultats : {{totalElements}}</div>
-  
+   -->

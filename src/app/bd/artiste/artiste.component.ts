@@ -113,7 +113,18 @@ export class ArtisteComponent implements OnInit {
     }
   }
 
+  // getPages(pagenumber){
+  //   this.page = pagenumber;
+  //   this.getArtistes();
+  // }
+
   getPages(pagenumber){
+    if(pagenumber<0){
+      pagenumber = 0;
+    }
+    if(pagenumber>this.totalPages-1){
+      pagenumber = this.totalPages -1;
+    }
     this.page = pagenumber;
     this.getArtistes();
   }
